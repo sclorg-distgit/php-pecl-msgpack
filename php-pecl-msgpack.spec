@@ -16,6 +16,9 @@
 %if "%{scl}" == "rh-php70"
 %global sub_prefix  sclo-php70-
 %endif
+%if "%{scl}" == "rh-php71"
+%global sub_prefix  sclo-php71-
+%endif
 %scl_package        php-pecl-msgpack
 %endif
 
@@ -26,7 +29,7 @@
 Summary:       API for communicating with MessagePack serialization
 Name:          %{?sub_prefix}php-pecl-msgpack
 Version:       2.0.2
-Release:       1%{?dist}%{!?scl:%{!?nophptag:%(%{__php} -r 'echo ".".PHP_MAJOR_VERSION.".".PHP_MINOR_VERSION;')}}
+Release:       2%{?dist}%{!?scl:%{!?nophptag:%(%{__php} -r 'echo ".".PHP_MAJOR_VERSION.".".PHP_MINOR_VERSION;')}}
 Source:        http://pecl.php.net/get/%{pecl_name}-%{version}.tgz
 License:       BSD
 Group:         Development/Languages
@@ -194,6 +197,9 @@ fi
 
 
 %changelog
+* Thu Aug 10 2017 Remi Collet <remi@remirepo.net> - 2.0.2-2
+- change for sclo-php71
+
 * Wed Feb 15 2017 Remi Collet <remi@fedoraproject.org> - 2.0.2-1
 - cleanup for SCLo build
 
