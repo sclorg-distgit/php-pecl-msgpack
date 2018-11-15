@@ -5,7 +5,7 @@
 #
 # Fedora spec file for php-pecl-msgpack
 #
-# Copyright (c) 2012-2017 Remi Collet
+# Copyright (c) 2012-2018 Remi Collet
 # License: CC-BY-SA
 # http://creativecommons.org/licenses/by-sa/4.0/
 #
@@ -19,6 +19,9 @@
 %if "%{scl}" == "rh-php71"
 %global sub_prefix  sclo-php71-
 %endif
+%if "%{scl}" == "rh-php72"
+%global sub_prefix  sclo-php72-
+%endif
 %scl_package        php-pecl-msgpack
 %endif
 
@@ -29,7 +32,7 @@
 Summary:       API for communicating with MessagePack serialization
 Name:          %{?sub_prefix}php-pecl-msgpack
 Version:       2.0.2
-Release:       2%{?dist}%{!?scl:%{!?nophptag:%(%{__php} -r 'echo ".".PHP_MAJOR_VERSION.".".PHP_MINOR_VERSION;')}}
+Release:       3%{?dist}%{!?scl:%{!?nophptag:%(%{__php} -r 'echo ".".PHP_MAJOR_VERSION.".".PHP_MINOR_VERSION;')}}
 Source:        http://pecl.php.net/get/%{pecl_name}-%{version}.tgz
 License:       BSD
 Group:         Development/Languages
@@ -144,6 +147,8 @@ done
 
 
 %check
+# __autoload is deprecated
+rm */tests/019.phpt
 # Erratic results
 rm */tests/034.phpt
 # Known by upstream as failed test (travis result)
@@ -197,6 +202,9 @@ fi
 
 
 %changelog
+* Thu Nov 15 2018 Remi Collet <remi@remirepo.net> - 2.0.2-3
+- build for sclo-php72
+
 * Thu Aug 10 2017 Remi Collet <remi@remirepo.net> - 2.0.2-2
 - change for sclo-php71
 
