@@ -5,7 +5,7 @@
 #
 # Fedora spec file for php-pecl-msgpack
 #
-# Copyright (c) 2012-2018 Remi Collet
+# Copyright (c) 2012-2019 Remi Collet
 # License: CC-BY-SA
 # http://creativecommons.org/licenses/by-sa/4.0/
 #
@@ -22,6 +22,9 @@
 %if "%{scl}" == "rh-php72"
 %global sub_prefix  sclo-php72-
 %endif
+%if "%{scl}" == "rh-php73"
+%global sub_prefix  sclo-php73-
+%endif
 %scl_package        php-pecl-msgpack
 %endif
 
@@ -31,12 +34,14 @@
 
 Summary:       API for communicating with MessagePack serialization
 Name:          %{?sub_prefix}php-pecl-msgpack
-Version:       2.0.2
-Release:       3%{?dist}%{!?scl:%{!?nophptag:%(%{__php} -r 'echo ".".PHP_MAJOR_VERSION.".".PHP_MINOR_VERSION;')}}
+Version:       2.0.3
+Release:       1%{?dist}%{!?scl:%{!?nophptag:%(%{__php} -r 'echo ".".PHP_MAJOR_VERSION.".".PHP_MINOR_VERSION;')}}
 Source:        http://pecl.php.net/get/%{pecl_name}-%{version}.tgz
 License:       BSD
 Group:         Development/Languages
 URL:           http://pecl.php.net/package/msgpack
+
+Patch1:        https://patch-diff.githubusercontent.com/raw/msgpack/msgpack-php/pull/125.patch
 
 BuildRequires: %{?scl_prefix}php-devel >= 7
 BuildRequires: %{?scl_prefix}php-pear
@@ -99,6 +104,7 @@ mv %{pecl_name}-%{version} NTS
 %{?_licensedir:sed -e '/LICENSE/s/role="doc"/role="src"/' -i package.xml}
 
 cd NTS
+%patch1 -p1 -b .pr125
 
 # Sanity check, really often broken
 extver=$(sed -n '/#define PHP_MSGPACK_VERSION/{s/.* "//;s/".*$//;p}' php_msgpack.h)
@@ -202,6 +208,9 @@ fi
 
 
 %changelog
+* Tue Jul 23 2019 Remi Collet <remi@remirepo.net> - 2.0.3-1
+- update to 2.0.3
+
 * Thu Nov 15 2018 Remi Collet <remi@remirepo.net> - 2.0.2-3
 - build for sclo-php72
 
