@@ -157,6 +157,7 @@ done
 rm */tests/019.phpt
 # Erratic results
 rm */tests/034.phpt
+rm */tests/035.phpt
 # Known by upstream as failed test (travis result)
 rm */tests/041.phpt
 rm */tests/040*.phpt
