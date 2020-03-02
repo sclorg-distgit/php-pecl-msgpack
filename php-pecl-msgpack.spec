@@ -5,20 +5,13 @@
 #
 # Fedora spec file for php-pecl-msgpack
 #
-# Copyright (c) 2012-2019 Remi Collet
+# Copyright (c) 2012-2020 Remi Collet
 # License: CC-BY-SA
 # http://creativecommons.org/licenses/by-sa/4.0/
 #
 # Please, preserve the changelog entries
 #
 %if 0%{?scl:1}
-%global sub_prefix  %{scl_prefix}
-%if "%{scl}" == "rh-php70"
-%global sub_prefix  sclo-php70-
-%endif
-%if "%{scl}" == "rh-php71"
-%global sub_prefix  sclo-php71-
-%endif
 %if "%{scl}" == "rh-php72"
 %global sub_prefix  sclo-php72-
 %endif
@@ -34,14 +27,12 @@
 
 Summary:       API for communicating with MessagePack serialization
 Name:          %{?sub_prefix}php-pecl-msgpack
-Version:       2.0.3
+Version:       2.1.0
 Release:       1%{?dist}%{!?scl:%{!?nophptag:%(%{__php} -r 'echo ".".PHP_MAJOR_VERSION.".".PHP_MINOR_VERSION;')}}
 Source:        http://pecl.php.net/get/%{pecl_name}-%{version}.tgz
 License:       BSD
 Group:         Development/Languages
 URL:           http://pecl.php.net/package/msgpack
-
-Patch1:        https://patch-diff.githubusercontent.com/raw/msgpack/msgpack-php/pull/125.patch
 
 BuildRequires: %{?scl_prefix}php-devel >= 7
 BuildRequires: %{?scl_prefix}php-pear
@@ -104,8 +95,6 @@ mv %{pecl_name}-%{version} NTS
 %{?_licensedir:sed -e '/LICENSE/s/role="doc"/role="src"/' -i package.xml}
 
 cd NTS
-%patch1 -p1 -b .pr125
-
 # Sanity check, really often broken
 extver=$(sed -n '/#define PHP_MSGPACK_VERSION/{s/.* "//;s/".*$//;p}' php_msgpack.h)
 if test "x${extver}" != "x%{version}%{?gh_date:-dev}"; then
@@ -153,14 +142,9 @@ done
 
 
 %check
-# __autoload is deprecated
-rm */tests/019.phpt
 # Erratic results
 rm */tests/034.phpt
 rm */tests/035.phpt
-# Known by upstream as failed test (travis result)
-rm */tests/041.phpt
-rm */tests/040*.phpt
 
 cd NTS
 : Minimal load test for NTS extension
@@ -209,6 +193,9 @@ fi
 
 
 %changelog
+* Mon Mar  2 2020 Remi Collet <remi@remirepo.net> - 2.1.0-1
+- update to 2.1.0
+
 * Tue Jul 23 2019 Remi Collet <remi@remirepo.net> - 2.0.3-1
 - update to 2.0.3
 
