@@ -27,7 +27,7 @@
 
 Summary:       API for communicating with MessagePack serialization
 Name:          %{?sub_prefix}php-pecl-msgpack
-Version:       2.1.0
+Version:       2.1.1
 Release:       1%{?dist}%{!?scl:%{!?nophptag:%(%{__php} -r 'echo ".".PHP_MAJOR_VERSION.".".PHP_MINOR_VERSION;')}}
 Source:        http://pecl.php.net/get/%{pecl_name}-%{version}.tgz
 License:       BSD
@@ -193,6 +193,9 @@ fi
 
 
 %changelog
+* Mon Aug 10 2020 Remi Collet <remi@remirepo.net> - 2.1.1-1
+- update to 2.1.1
+
 * Mon Mar  2 2020 Remi Collet <remi@remirepo.net> - 2.1.0-1
 - update to 2.1.0
 
